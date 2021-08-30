@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { config } from "../../config";
@@ -59,7 +58,7 @@ async function checkLogin(username, password) {
     console.log("error.response: ", error);
     const response = error.response.data;
 
-    if (response.message === errors.DUPLICATE_USERNAME) {
+    if (response.message === errors.NON_EXISTENT_USERNAME) {
       alert("존재하지 않는 아이디입니다.");
       return;
     }
