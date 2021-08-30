@@ -38,7 +38,7 @@ function LogInPage() {
           history.push("/");
         }}
       >
-        회원가입
+        로그인
       </button>
     </div>
   );
