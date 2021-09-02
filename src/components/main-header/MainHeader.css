@@ -1,3 +1,7 @@
+.main-header {
+  display: inline-block;
+}
+
 .signupBtn {
   float: right;
   margin-right: 20px;

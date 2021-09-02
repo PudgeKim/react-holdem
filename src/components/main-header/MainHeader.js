@@ -28,7 +28,7 @@ function MainHeader() {
   };
 
   return (
-    <div>
+    <div className="main-header">
       <button className="signupBtn" onClick={goToSignUpPage}>
         회원가입
       </button>
