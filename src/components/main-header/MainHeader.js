@@ -19,6 +19,10 @@ function MainHeader() {
   const [signInText, setClick] = useState(initialText);
   const history = useHistory();
 
+  const goToMakeRoomPage = () => {
+    history.push("/make-room");
+  };
+
   const goToLogInPage = () => {
     history.push("/login");
   };
@@ -29,12 +33,16 @@ function MainHeader() {
 
   return (
     <div className="main-header">
-      <button className="signupBtn" onClick={goToSignUpPage}>
-        회원가입
+      <button className="btn room-btn" onClick={goToMakeRoomPage}>
+        방 만들기
       </button>
 
-      <button className="loginBtn" onClick={goToLogInPage}>
+      <button className="btn" onClick={goToLogInPage}>
         {signInText}
+      </button>
+
+      <button className="btn" onClick={goToSignUpPage}>
+        회원가입
       </button>
     </div>
   );

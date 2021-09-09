@@ -1,22 +1,7 @@
-import axios from "axios";
 import React from "react";
-import { useHistory } from "react-router-dom";
-import RoomBox from "./RoomBox";
 
 function GameRoomPage() {
-  const history = useHistory();
-  const rooms = [
-    { id: 1, roomName: "room1" },
-    { id: 2, roomName: "room2" },
-    { id: 3, roomName: "room3" },
-  ];
-  return (
-    <ul className="room-list">
-      {rooms.map((room) => (
-        <RoomBox key={room.id} roomName={room.roomName} />
-      ))}
-    </ul>
-  );
+  return <h1>here is game room</h1>;
 }
 
 export default GameRoomPage;

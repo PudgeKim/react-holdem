@@ -1,9 +1,10 @@
 .main-header {
-  display: inline-block;
+  display: flex;
+  justify-content: right;
+  flex-wrap: wrap;
 }
 
-.signupBtn {
-  float: right;
+.btn {
   margin-right: 20px;
   margin-top: 20px;
   width: 100px;
@@ -11,11 +12,7 @@
   font-size: 20px;
 }
 
-.loginBtn {
-  float: right;
-  margin-right: 20px;
-  margin-top: 20px;
-  width: 100px;
-  height: 40px;
-  font-size: 20px;
+.room-btn {
+  margin-right: auto;
+  margin-left: 20px;
 }

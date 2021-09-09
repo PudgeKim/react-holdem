@@ -3,7 +3,6 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { config } from "../../config";
 import { errors } from "../../errors/errors";
-import "./LogInPage.css";
 
 function LogInPage() {
   const history = useHistory();
