@@ -1,22 +1,14 @@
-import React, { useState } from "react";
-import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import "./MainHeader.css";
 import { useHistory } from "react-router-dom";
-
-const loginText = "로그인";
-const logoutText = "로그아웃";
+import axios from "axios";
+import { config } from "../../config";
 
 function MainHeader() {
-  const accessToken = Cookies.get("accessToken");
+  const loginText = "로그인";
+  const logoutText = "로그아웃";
 
-  let initialText;
-  if (accessToken === undefined) {
-    initialText = loginText;
-  } else {
-    initialText = logoutText;
-  }
-
-  const [signInText, setClick] = useState(initialText);
+  const [loginState, setLoginState] = useState("");
   const history = useHistory();
 
   const goToMakeRoomPage = () => {
@@ -31,14 +23,45 @@ function MainHeader() {
     history.push("/signup");
   };
 
+  const signOut = async () => {
+    const base = axios.create({
+      baseURL: config.baseURL,
+      withCredentials: true,
+    });
+
+    try {
+      const response = await base.get("/auth/signout");
+      console.log("response: ", response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const base = axios.create({
+      baseURL: config.baseURL,
+      withCredentials: true,
+    });
+
+    base
+      .get("/auth/check-login")
+      .then((info) => {
+        info.data ? setLoginState(logoutText) : setLoginState(loginText);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
   return (
     <div className="main-header">
       <button className="btn room-btn" onClick={goToMakeRoomPage}>
         방 만들기
       </button>
 
-      <button className="btn" onClick={goToLogInPage}>
-        {signInText}
+      <button
+        className="btn"
+        onClick={loginState === loginText ? goToLogInPage : signOut}
+      >
+        {loginState}
       </button>
 
       <button className="btn" onClick={goToSignUpPage}>
