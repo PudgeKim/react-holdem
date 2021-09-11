@@ -1,8 +1,7 @@
-import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { config } from "../../config";
 import { errors } from "../../errors/errors";
+import { makeBaseReq } from "../../helpers/helpers";
 import "./SignUpPage.css";
 
 function SignUpPage() {
@@ -65,10 +64,7 @@ async function checkInfo(username, pw, pw2, nickname) {
     return false;
   }
 
-  const base = axios.create({
-    baseURL: config.baseURL,
-    withCredentials: true,
-  });
+  const base = makeBaseReq();
 
   try {
     await base.post("auth/signup", {

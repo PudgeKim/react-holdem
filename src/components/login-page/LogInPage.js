@@ -1,8 +1,7 @@
-import axios from "axios";
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { config } from "../../config";
 import { errors } from "../../errors/errors";
+import { makeBaseReq } from "../../helpers/helpers";
 
 function LogInPage() {
   const history = useHistory();
@@ -44,10 +43,7 @@ function LogInPage() {
 }
 
 async function checkLogin(username, password) {
-  const base = axios.create({
-    baseURL: config.baseURL,
-    withCredentials: true,
-  });
+  const base = makeBaseReq();
 
   try {
     const response = await base.post("auth/signin", {

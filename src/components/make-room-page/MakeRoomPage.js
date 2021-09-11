@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import axios from "axios";
-import { config } from "../../config";
 import "./MakeRoomPage.css";
+import { makeBaseReq } from "../../helpers/helpers";
 
 function MakeRoomPage() {
   const history = useHistory();
@@ -25,10 +24,7 @@ function MakeRoomPage() {
       return;
     }
 
-    const base = axios.create({
-      baseURL: config.baseURL,
-      withCredentials: true,
-    });
+    const base = makeBaseReq();
 
     try {
       const response = await base.post("game/create-room", {

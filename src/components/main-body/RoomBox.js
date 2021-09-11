@@ -1,7 +1,7 @@
 import React from "react";
 import "./RoomBox.css";
 
-function RoomBox({ roomName, loginState }) {
+function RoomBox({ roomName, host, loginState }) {
   const enterRoom = () => {
     alert("참가 완료");
   };
@@ -11,7 +11,8 @@ function RoomBox({ roomName, loginState }) {
   };
   return (
     <div className="roomBox">
-      <div>{roomName}</div>
+      <div className="roomText">{roomName}</div>
+      <div className="hostText">{host}님의 방</div>
       <button onClick={loginState ? enterRoom : requireLoginAlert}>참가</button>
     </div>
   );

@@ -4,3 +4,11 @@
   border: 5px solid black;
   margin: 20px;
 }
+
+.roomText {
+  font-size: 25px;
+}
+
+.hostText {
+  margin-top: 5px;
+}
