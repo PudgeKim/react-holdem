@@ -4,11 +4,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { config } from "../../config";
 
-function MainHeader() {
-  const loginText = "로그인";
-  const logoutText = "로그아웃";
-
-  const [loginState, setLoginState] = useState("");
+function MainHeader({ loginState, setLoginState }) {
+  const [loginText, setLoginText] = useState(
+    loginState ? "로그아웃" : "로그인"
+  );
   const history = useHistory();
 
   const goToMakeRoomPage = () => {
@@ -32,24 +31,20 @@ function MainHeader() {
     try {
       const response = await base.get("/auth/signout");
       console.log("response: ", response);
+      alert("로그아웃 되었습니다.");
+      setLoginState(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    const base = axios.create({
-      baseURL: config.baseURL,
-      withCredentials: true,
-    });
-
-    base
-      .get("/auth/check-login")
-      .then((info) => {
-        info.data ? setLoginState(logoutText) : setLoginState(loginText);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+    if (loginState) {
+      setLoginText("로그아웃");
+    } else {
+      setLoginText("로그인");
+    }
+  }, [loginState]);
 
   return (
     <div className="main-header">
@@ -57,11 +52,8 @@ function MainHeader() {
         방 만들기
       </button>
 
-      <button
-        className="btn"
-        onClick={loginState === loginText ? goToLogInPage : signOut}
-      >
-        {loginState}
+      <button className="btn" onClick={loginState ? signOut : goToLogInPage}>
+        {loginText}
       </button>
 
       <button className="btn" onClick={goToSignUpPage}>
