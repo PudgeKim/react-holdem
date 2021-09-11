@@ -30,7 +30,7 @@ function MainPage() {
         <MainHeader loginState={loginState} setLoginState={setLoginState} />
       </div>
       <div>
-        <MainBodyPage />
+        <MainBodyPage loginState={loginState} />
       </div>
     </div>
   );

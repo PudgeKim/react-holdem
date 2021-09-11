@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import RoomBox from "./RoomBox";
 import "./MainBodyPage.css";
 
-function MainBodyPage() {
+function MainBodyPage({ loginState }) {
   const history = useHistory();
   const rooms = [
     { id: 1, roomName: "room1" },
@@ -13,7 +13,11 @@ function MainBodyPage() {
   return (
     <ul className="room-list">
       {rooms.map((room) => (
-        <RoomBox key={room.id} roomName={room.roomName} />
+        <RoomBox
+          key={room.id}
+          roomName={room.roomName}
+          loginState={loginState}
+        />
       ))}
     </ul>
   );

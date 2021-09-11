@@ -22,6 +22,10 @@ function MainHeader({ loginState, setLoginState }) {
     history.push("/signup");
   };
 
+  const requireLoginAlert = () => {
+    alert("로그인이 필요합니다.");
+  };
+
   const signOut = async () => {
     const base = axios.create({
       baseURL: config.baseURL,
@@ -48,7 +52,10 @@ function MainHeader({ loginState, setLoginState }) {
 
   return (
     <div className="main-header">
-      <button className="btn room-btn" onClick={goToMakeRoomPage}>
+      <button
+        className="btn room-btn"
+        onClick={loginState ? goToMakeRoomPage : requireLoginAlert}
+      >
         방 만들기
       </button>
 
