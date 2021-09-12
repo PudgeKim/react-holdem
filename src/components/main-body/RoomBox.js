@@ -1,9 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import "./RoomBox.css";
 
 function RoomBox({ roomName, host, loginState }) {
+  const history = useHistory();
   const enterRoom = () => {
-    alert("참가 완료");
+    history.push({
+      pathname: "/game-room",
+      search: "?room=" + roomName,
+      state: { roomName: roomName },
+    });
   };
 
   const requireLoginAlert = () => {
@@ -13,7 +19,12 @@ function RoomBox({ roomName, host, loginState }) {
     <div className="roomBox">
       <div className="roomText">{roomName}</div>
       <div className="hostText">{host}님의 방</div>
-      <button onClick={loginState ? enterRoom : requireLoginAlert}>참가</button>
+      <button
+        className="joinBtn"
+        onClick={loginState ? enterRoom : requireLoginAlert}
+      >
+        참가
+      </button>
     </div>
   );
 }

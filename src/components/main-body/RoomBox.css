@@ -6,9 +6,16 @@
 }
 
 .roomText {
-  font-size: 25px;
+  font-size: 28px;
 }
 
 .hostText {
+  font-size: 10px;
   margin-top: 5px;
+}
+
+.joinBtn {
+  margin-top: 10px;
+  width: 100px;
+  height: 30px;
 }

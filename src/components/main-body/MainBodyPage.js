@@ -7,7 +7,7 @@ import { makeBaseReq } from "../../helpers/helpers";
 function MainBodyPage({ loginState }) {
   const history = useHistory();
   const [rooms, setRooms] = useState([]);
-  console.log("rooms type: ", rooms);
+
   const getAllRooms = async () => {
     const base = makeBaseReq();
     try {
