@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import socket from "socket.io-client";
+import io from "socket.io-client";
+import { config } from "../../config";
 
 function GameRoomPage() {
+  const socket = useRef(null);
   const location = useLocation();
-  const io = socket("localhost:8080/holdem-room");
-  io.on("connection", () => console.log("connection success"));
-  io.emit("joinRoom", { room: "testroom" });
-  return <h1>here is a game room {location.state.roomName}</h1>;
+  const roomId = location.state.roomId;
+  const roomName = location.state.roomName;
+
+  useEffect(() => {
+    socket.current = io(config.baseURL + "/holdem-room");
+    socket.current.emit("joinRoom", {
+      roomId: roomId,
+      roomName: roomName,
+    });
+    socket.current.on("joinedRoom", (e) => console.log(e));
+  }, []);
+
+  return <h1>here is a game room {roomName}</h1>;
 }
 
 export default GameRoomPage;

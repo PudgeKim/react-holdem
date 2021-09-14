@@ -4,14 +4,18 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { config } from "../../config";
 
-function MainHeader({ loginState, setLoginState }) {
+function MainHeader({ loginState, setLoginState, user }) {
+  console.log("main-header user: ", user);
   const [loginText, setLoginText] = useState(
     loginState ? "로그아웃" : "로그인"
   );
   const history = useHistory();
 
   const goToMakeRoomPage = () => {
-    history.push("/make-room");
+    history.push({
+      pathname: "/make-room",
+      state: { userId: user.userId, nickname: user.nickname },
+    });
   };
 
   const goToLogInPage = () => {

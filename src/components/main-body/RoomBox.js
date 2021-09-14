@@ -2,13 +2,13 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import "./RoomBox.css";
 
-function RoomBox({ roomName, host, loginState }) {
+function RoomBox({ roomId, roomName, host, loginState }) {
   const history = useHistory();
   const enterRoom = () => {
     history.push({
       pathname: "/game-room",
       search: "?room=" + roomName,
-      state: { roomName: roomName },
+      state: { roomId: roomId, roomName: roomName },
     });
   };
 

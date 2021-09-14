@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import "./MakeRoomPage.css";
 import { makeBaseReq } from "../../helpers/helpers";
+import { useLocation } from "react-router-dom";
 
 function MakeRoomPage() {
   const history = useHistory();
+  const location = useLocation();
+  console.log("makeroompage location: ", location);
+  const userId = location.state.userId;
+  const nickname = location.state.nickname;
   const [roomName, setRoomName] = useState("");
   const [warningText, setWarningText] = useState("");
 
@@ -27,18 +32,23 @@ function MakeRoomPage() {
     const base = makeBaseReq();
 
     try {
+      console.log("makeroompage userId: ", userId);
       const response = await base.post("game/create-room", {
-        userId: 1,
-        nickname: "testnickname",
+        userId: Number(userId),
+        nickname: nickname,
         roomName: roomName,
       });
-      console.log(response.data);
+      const responsedRoomId = response.data.roomId;
+      const responsedRoomName = response.data.roomName;
+      history.push({
+        pathname: "/game-room",
+        search: "?roomId=" + responsedRoomId,
+        state: { roomId: responsedRoomId, roomName: responsedRoomName },
+      });
     } catch (error) {
       const response = error.response.data;
       console.log(response);
     }
-
-    history.push("/game-room");
   };
 
   return (
