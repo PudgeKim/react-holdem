@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { config } from "../../config";
 import MainHeader from "../main-header/MainHeader";
@@ -24,7 +23,7 @@ function MainPage() {
     try {
       const response = await base.get("/auth/check-login", {
         headers: {
-          Authorization: Cookies.get("Authorization"),
+          Authorization: Cookies.get("accessToken"),
         },
       });
       const user = response.data.user;
@@ -35,12 +34,6 @@ function MainPage() {
       console.log(error);
       setLoginState(false);
     }
-    // base
-    //   .get("/auth/check-login")
-    //   .then((info) => {
-    //     info.data ? setLoginState(true) : setLoginState(false);
-    //   })
-    //   .catch((e) => console.log(e));
   };
 
   const getAllRooms = async () => {
@@ -65,7 +58,6 @@ function MainPage() {
       setRooms(rooms);
     }
 
-    //checkLogin();
     fetchLogin();
     fetchRooms();
   }, []);
@@ -80,7 +72,7 @@ function MainPage() {
         />
       </div>
       <div>
-        <MainBodyPage loginState={loginState} rooms={rooms} />
+        <MainBodyPage loginState={loginState} rooms={rooms} user={user} />
       </div>
     </div>
   );

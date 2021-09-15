@@ -8,17 +8,24 @@ function GameRoomPage() {
   const location = useLocation();
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
+  const user = location.state.user;
 
   useEffect(() => {
     socket.current = io(config.baseURL + "/holdem-room");
     socket.current.emit("joinRoom", {
       roomId: roomId,
       roomName: roomName,
+      userId: user.userId,
+      nickname: user.nickname,
     });
     socket.current.on("joinedRoom", (e) => console.log(e));
   }, []);
 
-  return <h1>here is a game room {roomName}</h1>;
+  return (
+    <h1>
+      here is a game room {roomName} with {user.nickname}
+    </h1>
+  );
 }
 
 export default GameRoomPage;

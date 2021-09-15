@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import RoomBox from "./RoomBox";
 import "./MainBodyPage.css";
-import { makeBaseReq } from "../../helpers/helpers";
 
-function MainBodyPage({ loginState, rooms }) {
+function MainBodyPage({ loginState, rooms, user }) {
   //const history = useHistory();
   // const [rooms, setRooms] = useState([]);
 
@@ -38,6 +36,7 @@ function MainBodyPage({ loginState, rooms }) {
           roomName={room.roomName}
           host={room.host}
           loginState={loginState}
+          user={user}
         />
       ))}
     </ul>
