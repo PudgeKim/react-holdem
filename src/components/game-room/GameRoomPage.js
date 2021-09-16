@@ -9,6 +9,15 @@ function GameRoomPage() {
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
   const user = location.state.user;
+  const [isHost, setHost] = useState(false);
+
+  const setGamePlayers = (usersInfo) => {
+    if (usersInfo.host === user.nickname) {
+      setHost(true);
+    }
+
+    usersInfo.allUsers.map((user) => console.log);
+  };
 
   useEffect(() => {
     socket.current = io(config.baseURL + "/holdem-room");
@@ -18,13 +27,19 @@ function GameRoomPage() {
       userId: user.userId,
       nickname: user.nickname,
     });
-    socket.current.on("joinedRoom", (e) => console.log(e));
+    socket.current.on("getUsersInfo", (usersInfo) => setGamePlayers);
   }, []);
 
+  const startBtn = <button className="startBtn">게임 시작</button>;
+  const waitMsg = <h3>방장이 시작하기전까지 대기중입니다...</h3>;
+
   return (
-    <h1>
-      here is a game room {roomName} with {user.nickname}
-    </h1>
+    <div>
+      <h1>
+        here is a game room {roomName} with {user.nickname}
+      </h1>
+      {isHost ? startBtn : waitMsg}
+    </div>
   );
 }
 

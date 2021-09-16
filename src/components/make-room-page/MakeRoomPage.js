@@ -46,8 +46,8 @@ function MakeRoomPage() {
         state: { roomId: responsedRoomId, roomName: responsedRoomName },
       });
     } catch (error) {
-      const response = error.response.data;
-      console.log(response);
+      //const response = error.response
+      console.log(error);
     }
   };
 
