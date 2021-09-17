@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
 import { config } from "../../config";
 import "./GameRoomPage.css";
+import PlayerBox from "./PlayerBox";
+import PlayerBoxes from "./PlayerBoxes";
 
 function GameRoomPage() {
   const socket = useRef(null);
@@ -12,34 +14,39 @@ function GameRoomPage() {
   const user = location.state.user;
   const [isHost, setHost] = useState(false);
   const [isGameStart, setGameStart] = useState(false);
+  const testPlayers = [
+    { nickname: "kkk", money: "100" },
+    { nickname: "ggg", money: 200 },
+  ];
+  const [players, setPlayers] = useState([]);
 
   const gameStart = () => {
     setGameStart(true);
   };
 
-  const setGamePlayers = (usersInfo) => {
+  const getGamePlayers = (usersInfo) => {
     if (usersInfo.host === user.nickname) {
       setHost(true);
     }
 
     const users = usersInfo.allUsers;
     let meIdx = -1; // 자신을 나타내는 인덱스 (자기의 플레이어가 중앙에 가기 위함)
-    const players = []; // 자신의 플레이어가 인덱스 0에 들어가게 되는 리스트
+    const playerArr = []; // 자신의 플레이어가 인덱스 0에 들어가게 되는 리스트
     for (let i = 0; i < users.length; i++) {
       if (users[i].nickname === user.nickname) {
         meIdx = i;
       }
 
       if (meIdx !== -1) {
-        players.push(users[i]);
+        playerArr.push(users[i]);
       }
     }
 
     for (let i = 0; i < meIdx; i++) {
-      players.push(users[i]);
+      playerArr.push(users[i]);
     }
 
-    return players;
+    return playerArr;
   };
 
   useEffect(() => {
@@ -51,7 +58,8 @@ function GameRoomPage() {
       nickname: user.nickname,
     });
     socket.current.on("getUsersInfo", (usersInfo) => {
-      setGamePlayers(usersInfo);
+      const playerArr = getGamePlayers(usersInfo);
+      setPlayers(playerArr);
     });
   }, []);
 
@@ -77,6 +85,7 @@ function GameRoomPage() {
     <div className="flex-container">
       <img className="tableImg" src="/images/table.png" alt="loading.." />
       {msgBeforeStart}
+      <PlayerBoxes players={players} />
     </div>
   );
 }
