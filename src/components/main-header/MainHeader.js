@@ -5,7 +5,6 @@ import axios from "axios";
 import { config } from "../../config";
 
 function MainHeader({ loginState, setLoginState, user }) {
-  console.log("main-header user: ", user);
   const [loginText, setLoginText] = useState(
     loginState ? "로그아웃" : "로그인"
   );

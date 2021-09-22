@@ -1,23 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import io from "socket.io-client";
-import { config } from "../../config";
+import { useLocation, useHistory } from "react-router-dom";
+//import io from "socket.io-client";
+//import { config } from "../../config";
 import "./GameRoomPage.css";
-import PlayerBox from "./PlayerBox";
 import PlayerBoxes from "./PlayerBoxes";
+import { addGetUsersInfoEvent, initSocket, leaveRoom } from "./socket";
+
+//const socket = io(config.baseURL + "/holdem-room");
 
 function GameRoomPage() {
-  const socket = useRef(null);
+  const history = useHistory();
+  //const socket = useRef(null);
   const location = useLocation();
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
   const user = location.state.user;
   const [isHost, setHost] = useState(false);
   const [isGameStart, setGameStart] = useState(false);
-  const testPlayers = [
-    { nickname: "kkk", money: "100" },
-    { nickname: "ggg", money: 200 },
-  ];
+  //let leave;
+  //socket = io(config.baseURL + "/holdem-room");
+
   const [players, setPlayers] = useState([]);
 
   const gameStart = () => {
@@ -49,18 +51,29 @@ function GameRoomPage() {
     return playerArr;
   };
 
+  // const leaveRoom = () => {
+  //   socket.emit("leaveRoom", {
+  //     roomId: roomId,
+  //     nickname: user.nickname,
+  //   });
+
+  //   history.goBack();
+  // };
+
   useEffect(() => {
-    socket.current = io(config.baseURL + "/holdem-room");
-    socket.current.emit("joinRoom", {
-      roomId: roomId,
-      roomName: roomName,
-      userId: user.userId,
-      nickname: user.nickname,
-    });
-    socket.current.on("getUsersInfo", (usersInfo) => {
-      const playerArr = getGamePlayers(usersInfo);
-      setPlayers(playerArr);
-    });
+    // socket.emit("joinRoom", {
+    //   roomId: roomId,
+    //   roomName: roomName,
+    //   userId: user.userId,
+    //   nickname: user.nickname,
+    // });
+    // socket.on("getUsersInfo", (usersInfo) => {
+    //   console.log("getUsersInfo event !!");
+    //   const playerArr = getGamePlayers(usersInfo);
+    //   setPlayers(playerArr);
+    // });
+    initSocket(roomId, roomName, user);
+    addGetUsersInfoEvent(getGamePlayers, setPlayers);
   }, []);
 
   const startBtn = (
@@ -82,10 +95,21 @@ function GameRoomPage() {
   }
 
   return (
-    <div className="flex-container">
-      <img className="tableImg" src="/images/table.png" alt="loading.." />
-      {msgBeforeStart}
-      <PlayerBoxes players={players} />
+    <div>
+      <div className="container">
+        <img className="tableImg" src="/images/table.png" alt="loading.." />
+        {msgBeforeStart}
+        <PlayerBoxes players={players} />
+      </div>
+
+      <button
+        className="leaveBtn"
+        onClick={() => {
+          leaveRoom(roomId, user, history);
+        }}
+      >
+        나가기
+      </button>
     </div>
   );
 }

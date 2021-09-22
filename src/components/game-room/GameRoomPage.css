@@ -1,8 +1,6 @@
-.flex-container {
-  display: flex;
-  justify-content: center;
+.container {
   margin-top: 70px;
-  flex-direction: column;
+  position: relative;
 }
 
 .tableImg {
