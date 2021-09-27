@@ -2,7 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import "./GameRoomPage.css";
 import PlayerBoxes from "./PlayerBoxes";
-import { addGetUsersInfoEvent, initSocket, leaveRoom } from "./socket";
+import {
+  addGetUsersInfoEvent,
+  getCardFromDeck,
+  getCardFromDeckEvent,
+  getFirstCardsEvent,
+  initSocket,
+  joinRoom,
+  leaveRoom,
+  startGame,
+} from "./socket";
 
 function GameRoomPage() {
   const history = useHistory();
@@ -45,8 +54,13 @@ function GameRoomPage() {
   };
 
   useEffect(() => {
-    initSocket(roomId, roomName, user);
-    addGetUsersInfoEvent(getGamePlayers, setPlayers);
+    if (initSocket()) {
+      joinRoom(roomId, roomName, user);
+      addGetUsersInfoEvent(getGamePlayers, setPlayers);
+      getCardFromDeckEvent();
+    } else {
+      alert("socket is not connected");
+    }
   }, []);
 
   const startBtn = (
@@ -74,6 +88,22 @@ function GameRoomPage() {
         {msgBeforeStart}
         <PlayerBoxes players={players} />
       </div>
+
+      <button
+        onClick={() => {
+          startGame(roomId);
+        }}
+      >
+        start
+      </button>
+
+      <button
+        onClick={() => {
+          getCardFromDeck(roomId, "flop");
+        }}
+      >
+        getCard
+      </button>
 
       <button
         className="leaveBtn"
