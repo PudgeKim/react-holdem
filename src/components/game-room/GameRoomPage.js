@@ -16,6 +16,7 @@ import {
 function GameRoomPage() {
   const history = useHistory();
   const location = useLocation();
+  // MakeRoomPage에서 넘어온 userId
   const roomId = location.state.roomId;
   const roomName = location.state.roomName;
   const user = location.state.user;

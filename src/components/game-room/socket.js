@@ -17,7 +17,7 @@ export const joinRoom = (roomId, roomName, user) => {
       userId: user.userId,
       nickname: user.nickname,
     });
-    console.log("initSocket test!"); /////
+    console.log("joinRoom test!"); /////
   }
 };
 

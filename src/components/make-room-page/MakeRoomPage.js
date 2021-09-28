@@ -8,8 +8,7 @@ function MakeRoomPage() {
   const history = useHistory();
   const location = useLocation();
   console.log("makeroompage location: ", location);
-  const userId = location.state.userId;
-  const nickname = location.state.nickname;
+  const user = location.state.user;
   const [roomName, setRoomName] = useState("");
   const [warningText, setWarningText] = useState("");
 
@@ -32,22 +31,26 @@ function MakeRoomPage() {
     const base = makeBaseReq();
 
     try {
-      console.log("makeroompage userId: ", userId);
       const response = await base.post("game/create-room", {
-        userId: Number(userId),
-        nickname: nickname,
+        userId: Number(user.userId),
+        nickname: user.nickname,
         roomName: roomName,
       });
       const responsedRoomId = response.data.roomId;
       const responsedRoomName = response.data.roomName;
+
       history.push({
         pathname: "/game-room",
         search: "?roomId=" + responsedRoomId,
-        state: { roomId: responsedRoomId, roomName: responsedRoomName },
+        state: {
+          roomId: responsedRoomId,
+          roomName: responsedRoomName,
+          user: user,
+        },
       });
     } catch (error) {
       //const response = error.response
-      console.log(error);
+      console.log("makeRoomPage err: ", error);
     }
   };
 

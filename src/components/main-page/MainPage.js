@@ -42,7 +42,7 @@ function MainPage() {
       const rooms = await base.get("/game/all-rooms");
       return rooms;
     } catch (error) {
-      console.log(error);
+      console.log("MainPage getAllRooms function: ", error);
       alert("네트워크 통신이 불안정하여 방 정보를 가져올 수 없습니다.");
       return [];
     }
@@ -54,6 +54,8 @@ function MainPage() {
     }
     async function fetchRooms() {
       const response = await getAllRooms();
+
+      console.log("MainPage response: ", response);
       const rooms = response.data.allRooms;
       setRooms(rooms);
     }

@@ -13,7 +13,7 @@ function MainHeader({ loginState, setLoginState, user }) {
   const goToMakeRoomPage = () => {
     history.push({
       pathname: "/make-room",
-      state: { userId: user.userId, nickname: user.nickname },
+      state: { user: user },
     });
   };
 
