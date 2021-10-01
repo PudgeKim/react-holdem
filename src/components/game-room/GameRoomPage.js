@@ -7,9 +7,11 @@ import {
   getCardFromDeck,
   getCardFromDeckEvent,
   getFirstCardsEvent,
+  getParticipantEvent,
   initSocket,
   joinRoom,
   leaveRoom,
+  participateGame,
   startGame,
 } from "./socket";
 
@@ -25,7 +27,8 @@ function GameRoomPage() {
 
   const [players, setPlayers] = useState([]);
 
-  const gameStart = () => {
+  const gameStartOnClick = () => {
+    startGame(roomId);
     setGameStart(true);
   };
 
@@ -55,17 +58,22 @@ function GameRoomPage() {
   };
 
   useEffect(() => {
-    if (initSocket()) {
-      joinRoom(roomId, roomName, user);
-      addGetUsersInfoEvent(getGamePlayers, setPlayers);
-      getCardFromDeckEvent();
+    const socket = initSocket();
+    if (socket) {
+      socket.on("connect", () => {
+        addGetUsersInfoEvent(getGamePlayers, setPlayers);
+        getParticipantEvent();
+        getFirstCardsEvent();
+        getCardFromDeckEvent();
+        joinRoom(roomId, roomName, user);
+      });
     } else {
       alert("socket is not connected");
     }
   }, []);
 
   const startBtn = (
-    <button className="startBtn" onClick={gameStart}>
+    <button className="startBtn" onClick={gameStartOnClick}>
       게임 시작
     </button>
   );
@@ -92,10 +100,10 @@ function GameRoomPage() {
 
       <button
         onClick={() => {
-          startGame(roomId);
+          participateGame(roomId, user.nickname);
         }}
       >
-        start
+        게임 참가
       </button>
 
       <button

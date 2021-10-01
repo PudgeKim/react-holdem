@@ -5,8 +5,7 @@ let socket;
 
 export const initSocket = () => {
   socket = io(config.baseURL + "/holdem-room");
-  if (socket) return true;
-  else return false;
+  return socket;
 };
 
 export const joinRoom = (roomId, roomName, user) => {
@@ -43,6 +42,23 @@ export const addGetUsersInfoEvent = (getGamePlayers, setPlayers) => {
   }
 };
 
+export const participateGame = (roomId, nickname) => {
+  if (socket) {
+    socket.emit("participateGame", {
+      roomId: roomId,
+      nickname: nickname,
+    });
+    console.log("participate game!");
+  }
+};
+
+export const getParticipantEvent = () => {
+  if (socket) {
+    socket.on("getParticipant", (data) => {
+      console.log("getParticipantEvent data: ", data);
+    });
+  }
+};
 export const startGame = (roomId) => {
   if (socket) {
     socket.emit("startGame", {
