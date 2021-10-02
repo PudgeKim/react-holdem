@@ -59,12 +59,24 @@ export const getParticipantEvent = () => {
     });
   }
 };
+
 export const startGame = (roomId) => {
   if (socket) {
     socket.emit("startGame", {
       roomId: roomId,
     });
     console.log("startGame test!!!"); //////
+  }
+};
+
+export const cannotStartEvent = (setGameStart) => {
+  if (socket) {
+    socket.on("cannotStart", (data) => {
+      if (!data.success) {
+        alert(data.message);
+        setGameStart(false);
+      }
+    });
   }
 };
 

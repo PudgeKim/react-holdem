@@ -4,6 +4,7 @@ import "./GameRoomPage.css";
 import PlayerBoxes from "./PlayerBoxes";
 import {
   addGetUsersInfoEvent,
+  cannotStartEvent,
   getCardFromDeck,
   getCardFromDeckEvent,
   getFirstCardsEvent,
@@ -63,6 +64,7 @@ function GameRoomPage() {
       socket.on("connect", () => {
         addGetUsersInfoEvent(getGamePlayers, setPlayers);
         getParticipantEvent();
+        cannotStartEvent(setGameStart);
         getFirstCardsEvent();
         getCardFromDeckEvent();
         joinRoom(roomId, roomName, user);
