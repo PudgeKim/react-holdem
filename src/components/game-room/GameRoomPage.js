@@ -25,8 +25,11 @@ function GameRoomPage() {
   const user = location.state.user;
   const [isHost, setHost] = useState(false);
   const [isGameStart, setGameStart] = useState(false);
-
   const [players, setPlayers] = useState([]);
+  const [card1ImgPath, setCard1Path] = useState(null);
+  const [card2ImgPath, setCard2Path] = useState(null);
+  const [isSB, setSB] = useState(false);
+  const [isBB, setBB] = useState(false);
 
   const gameStartOnClick = () => {
     startGame(roomId);
@@ -65,7 +68,7 @@ function GameRoomPage() {
         addGetUsersInfoEvent(getGamePlayers, setPlayers);
         getParticipantEvent();
         cannotStartEvent(setGameStart);
-        getFirstCardsEvent();
+        getFirstCardsEvent(setCard1Path, setCard2Path, setSB, setBB);
         getCardFromDeckEvent();
         joinRoom(roomId, roomName, user);
       });
@@ -124,6 +127,14 @@ function GameRoomPage() {
       >
         나가기
       </button>
+
+      <div className="playerCard">
+        <img className="cardImg" src={card1ImgPath} alt="card1Img" />
+      </div>
+
+      <div className="playerCard">
+        <img className="cardImg" src={card2ImgPath} alt="card2Img" />
+      </div>
     </div>
   );
 }

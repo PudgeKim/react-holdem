@@ -80,10 +80,30 @@ export const cannotStartEvent = (setGameStart) => {
   }
 };
 
-export const getFirstCardsEvent = () => {
+export const getFirstCardsEvent = (
+  setCard1Path,
+  setCard2Path,
+  setSB,
+  setBB
+) => {
   if (socket) {
     socket.on("getFirstCards", (data) => {
-      console.log("getFirstCards data: ", data);
+      const card1Symbol = data.card1.symbol;
+      const card1Num = data.card1.num;
+      const card2Symbol = data.card2.symbol;
+      const card2Num = data.card2.num;
+
+      const card1ImgPath =
+        "/images/cards/" + card1Symbol + "_" + String(card1Num) + ".png";
+      const card2ImgPath =
+        "/images/cards/" + card2Symbol + "_" + String(card2Num) + ".png";
+
+      console.log("card path: ", card1ImgPath, card2ImgPath); /////
+      setCard1Path(card1ImgPath);
+      setCard2Path(card2ImgPath);
+
+      if (data.sb) setSB(true);
+      else if (data.bb) setBB(true);
     });
   }
 };

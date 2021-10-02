@@ -27,7 +27,7 @@ function MainPage() {
         },
       });
       const user = response.data.user;
-      console.log("user: ", user);
+      console.log("MainPage user: ", user);
       setUser({ userId: user.id, nickname: user.nickname });
       setLoginState(true);
     } catch (error) {
@@ -40,6 +40,7 @@ function MainPage() {
     const base = makeBaseReq();
     try {
       const rooms = await base.get("/game/all-rooms");
+      console.log("MainPage getAllRooms response: ", rooms);
       return rooms;
     } catch (error) {
       console.log("MainPage getAllRooms function: ", error);
@@ -56,8 +57,12 @@ function MainPage() {
       const response = await getAllRooms();
 
       console.log("MainPage response: ", response);
-      const rooms = response.data.allRooms;
-      setRooms(rooms);
+      if (response === []) {
+        setRooms([]);
+      } else {
+        const rooms = response.data.allRooms;
+        setRooms(rooms);
+      }
     }
 
     fetchLogin();
