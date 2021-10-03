@@ -7,7 +7,9 @@ function PlayerBoxes({ players }) {
   return (
     <div className="playerBoxes">
       {players.map((player) => {
-        return <PlayerBox player={player} imgNum={imgNum++} />;
+        return (
+          <PlayerBox key={player.nickname} player={player} imgNum={imgNum++} />
+        );
       })}
     </div>
   );

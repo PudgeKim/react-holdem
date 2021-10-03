@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./MainHeader.css";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { config } from "../../config";
+import { config } from "../../../config";
 
 function MainHeader({ loginState, setLoginState, user }) {
   const [loginText, setLoginText] = useState(

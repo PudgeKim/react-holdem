@@ -1,15 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function MakeRoomButton({ userId, nickname }) {
+function MakeRoomButton({ user }) {
   const history = useHistory();
-  console.log("makeroombutton userId, nickname ", userId, nickname);
+  console.log("makeroombutton userId, nickname ", user);
   const onClick = () => {
     history.push({
       pathname: "/make-room",
-      state: { userId: userId, nickname: nickname },
+      state: { user: user },
     });
-    //history.push("/make-room-page");
   };
 
   return <button>방만들기</button>;

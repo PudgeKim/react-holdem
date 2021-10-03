@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { config } from "../../config";
-import MainHeader from "../main-header/MainHeader";
-import MainBodyPage from "../main-body/MainBodyPage";
+import MainHeader from "./main-header/MainHeader";
+import MainBodyPage from "./main-body/MainBodyPage";
 import { makeBaseReq } from "../../helpers/helpers";
 import Cookies from "js-cookie";
 
@@ -28,7 +28,7 @@ function MainPage() {
       });
       const user = response.data.user;
       console.log("MainPage user: ", user);
-      setUser({ userId: user.id, nickname: user.nickname });
+      setUser({ userId: user.id, nickname: user.nickname, money: user.money });
       setLoginState(true);
     } catch (error) {
       console.log(error);

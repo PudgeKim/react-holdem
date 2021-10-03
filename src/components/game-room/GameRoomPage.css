@@ -18,6 +18,16 @@
 }
 
 .playerCard {
+  display: inline-block;
   width: 100px;
   height: 200px;
+}
+
+.betBox {
+  display: inline-block;
+  margin-left: 300px;
+}
+
+.betBtn {
+  margin-left: 10px;
 }

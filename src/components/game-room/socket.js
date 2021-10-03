@@ -31,7 +31,11 @@ export const leaveRoom = (roomId, user, history) => {
   }
 };
 
-export const addGetUsersInfoEvent = (getGamePlayers, setPlayers) => {
+export const addGetUsersInfoEvent = (
+  getGamePlayers,
+  setPlayers,
+  setPlayerMoney
+) => {
   if (socket) {
     socket.on("getUsersInfo", (usersInfo) => {
       console.log("getUsersInfo event !!"); /////
@@ -52,10 +56,13 @@ export const participateGame = (roomId, nickname) => {
   }
 };
 
-export const getParticipantEvent = () => {
+export const getParticipantEvent = (nickname, setParticipate) => {
   if (socket) {
     socket.on("getParticipant", (data) => {
-      console.log("getParticipantEvent data: ", data);
+      if (nickname === data.nickname && data.isParticipated) {
+        setParticipate(true);
+      }
+      console.log("getParticipantEvent data: ", data); /////
     });
   }
 };
@@ -122,6 +129,16 @@ export const getCardFromDeckEvent = () => {
   if (socket) {
     socket.on("getCardFromDeck", (data) => {
       console.log("listen get card from deck: ", data);
+    });
+  }
+};
+
+export const emitBetMoney = (roomId, nickname, money) => {
+  if (socket) {
+    socket.emit("betting", {
+      roomId,
+      nickname,
+      betMoney: money,
     });
   }
 };
