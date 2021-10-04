@@ -35,11 +35,6 @@ function GameRoomPage() {
   const [isParticipated, setParticipate] = useState(false);
   const refBetMoney = useRef("0");
 
-  const gameStartOnClick = () => {
-    startGame(roomId);
-    setGameStart(true);
-  };
-
   const getGamePlayers = (usersInfo) => {
     if (usersInfo.host === user.nickname) {
       setHost(true);
@@ -105,7 +100,13 @@ function GameRoomPage() {
         addGetUsersInfoEvent(getGamePlayers, setPlayers, setUserMoney);
         getParticipantEvent(user.nickname, setParticipate);
         cannotStartEvent(setGameStart);
-        getFirstCardsEvent(setCard1Path, setCard2Path, setSB, setBB);
+        getFirstCardsEvent(
+          setGameStart,
+          setCard1Path,
+          setCard2Path,
+          setSB,
+          setBB
+        );
         getCardFromDeckEvent();
         joinRoom(roomId, roomName, user);
       });
@@ -115,7 +116,7 @@ function GameRoomPage() {
   }, []);
 
   const startBtn = (
-    <button className="startBtn" onClick={gameStartOnClick}>
+    <button className="startBtn" onClick={() => startGame(roomId)}>
       게임 시작
     </button>
   );

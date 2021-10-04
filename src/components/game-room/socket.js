@@ -88,6 +88,7 @@ export const cannotStartEvent = (setGameStart) => {
 };
 
 export const getFirstCardsEvent = (
+  setGameStart,
   setCard1Path,
   setCard2Path,
   setSB,
@@ -111,6 +112,8 @@ export const getFirstCardsEvent = (
 
       if (data.sb) setSB(true);
       else if (data.bb) setBB(true);
+
+      setGameStart(true);
     });
   }
 };
